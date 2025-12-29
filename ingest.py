@@ -2,11 +2,11 @@ import os
 from langchain_community.document_loaders import DirectoryLoader
 from langchain_community.document_loaders.pdf import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings  # Updated import
+
 from langchain_community.vectorstores import FAISS
 import pickle
+from langchain_huggingface import HuggingFaceEmbeddings
 
-# Hard-code your API key here
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
 
 # Configuration

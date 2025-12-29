@@ -2,43 +2,148 @@
 
 {% block title %}Sign Up - LEGALEASE NEPAL{% endblock %}
 
+{% block extra_css %}
+<style>
+    .card {
+        border-radius: 10px;
+    }
+    .card-header {
+        border-radius: 10px 10px 0 0;
+    }
+    .form-control:focus {
+        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header bg-primary text-white">
-                <h3 class="mb-0 text-center"><i class="bi bi-person-plus me-2"></i>Sign Up</h3>
-            </div>
-            <div class="card-body">
-                {% if error %}
-                <div class="alert alert-danger" role="alert">
-                    {{ error }}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0"><i class="bi bi-person-plus me-2"></i>Sign Up</h3>
                 </div>
-                {% endif %}
-                <form method="post" action="/signup">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+                <div class="card-body p-4">
+                    {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ error }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-person-plus me-2"></i>Sign Up
-                        </button>
-                    </div>
-                </form>
-                <div class="text-center mt-3">
-                    <p>Already have an account? <a href="/login">Login</a></p>
+                    {% endif %}
+                    <form method="post" action="/signup" id="signupForm" novalidate>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() if csrf_token is defined else '' }}">
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required
+                                aria-describedby="usernameHelp" placeholder="Enter your username">
+                            <div id="usernameHelp" class="form-text">Choose a unique username (3–20 characters).</div>
+                            <div class="invalid-feedback">Username is required and must be 3–20 characters long.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required
+                                aria-describedby="emailHelp" placeholder="Enter your email">
+                            <div id="emailHelp" class="form-text">We'll never share your email with anyone.</div>
+                            <div class="invalid-feedback">Please enter a valid email address (e.g., user@example.com).</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password" name="password" required
+                                    aria-describedby="passwordHelp" placeholder="Enter your password">
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                    <i class="bi bi-eye" id="toggleIcon"></i>
+                                </button>
+                            </div>
+                            <div class="form-text" id="passwordHelp">Must be 8+ characters with uppercase, lowercase, digit, and special character.</div>
+                            <div class="invalid-feedback">Password must be 8+ characters with uppercase, lowercase, digit, and special character.</div>
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+
+                        <div class="text-center">
+                            <p>Already have an account? <a href="/login" class="text-primary">Login</a></p>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+{% block scripts %}
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggleIcon');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.replace('bi-eye', 'bi-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.replace('bi-eye-slash', 'bi-eye');
+        }
+    });
+
+    document.getElementById('signupForm').addEventListener('submit', function (event) {
+        let isValid = true;
+
+        const username = document.getElementById('username');
+        if (username.value.length < 3 || username.value.length > 20) {
+            username.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            username.classList.remove('is-invalid');
+            username.classList.add('is-valid');
+        }
+
+        const email = document.getElementById('email');
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(email.value)) {
+            email.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            email.classList.remove('is-invalid');
+            email.classList.add('is-valid');
+        }
+
+        const password = document.getElementById('password');
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        if (!passwordPattern.test(password.value)) {
+            password.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            password.classList.remove('is-invalid');
+            password.classList.add('is-valid');
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    });
+
+    ['username', 'email', 'password'].forEach(id => {
+        document.getElementById(id).addEventListener('input', function () {
+            this.classList.remove('is-invalid');
+            this.classList.remove('is-valid');
+        });
+    });
+</script>
+{% endblock %}
 {% endblock %}

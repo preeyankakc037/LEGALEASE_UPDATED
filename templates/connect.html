@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Lawyers - LEGALEASE NEPAL</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .hero-img {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .hero-img h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .hero-img p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .hero-img .btn-primary {
+            background-color: #1a3c6c;
+            border-color: #1a3c6c;
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+        }
+        .hero-img .btn-primary:hover {
+            background-color: #0e2b4e;
+            border-color: #0e2b4e;
+        }
+        .lawyer-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .star-rating .bi-star-fill {
+            color: #f1c40f;
+        }
+        .connect-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .connect-section .form-label {
+            font-weight: 600;
+            color: #1a3c6c;
+        }
+        .connect-section .form-control,
+        .connect-section .form-select {
+            border-color: #ced4da;
+            border-radius: 8px;
+        }
+        .connect-section .btn-primary {
+            background-color: #1a3c6c;
+            border-color: #1a3c6c;
+        }
+        .connect-section .btn-primary:hover {
+            background-color: #0e2b4e;
+            border-color: #0e2b4e;
+        }
+        .news-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .news-card {
+            border: none;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+        .news-card .card-title {
+            color: #1a3c6c;
+            font-weight: 600;
+        }
+        .news-card .card-text {
+            color: #555;
+        }
+        .footer {
+            background-color: #1a3c6c;
+            color: white;
+            padding: 3rem 0;
+        }
+        .footer h4 {
+            color: #f1c40f;
+            margin-bottom: 1.5rem;
+        }
+        .footer-links li a {
+            color: #d1e0ff;
+            text-decoration: none;
+        }
+        .footer-links li a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+        .social-links a {
+            color: #d1e0ff;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+        .social-links a:hover {
+            color: #ffffff;
+        }
+        .footer-bottom {
+            border-top: 1px solid #d1e0ff;
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .footer-bottom p {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">LEGALEASE NEPAL</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-house me-1"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about"><i class="bi bi-info-circle me-1"></i>About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/chatbot"><i class="bi bi-chat-dots me-1"></i>Chatbot</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/connect"><i class="bi bi-people me-1"></i>Connect</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login"><i class="bi bi-box-arrow-in-right me-1"></i>Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup"><i class="bi bi-person-plus me-1"></i>Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-5">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero-img mb-5">
+                <div>
+                    <h1 class="display-4 fw-bold">Connect with Top Lawyers in Nepal</h1>
+                    <p class="lead">Empower your business with expert legal guidance and stay updated with the latest legal news from LegalEase Nepal.</p>
+                    <a href="#connect" class="btn btn-primary btn-lg">Book a Consultation</a>
+                </div>
+            </section>
+
+            <!-- Premium Lawyers Section -->
+            <section id="lawyers" class="mb-5">
+                <h2 class="text-center fw-bold mb-4">Our Premium Lawyers</h2>
+                <!-- Filters -->
+                <div class="row justify-content-center mb-4">
+                    <div class="col-md-3">
+                        <select id="locationFilter" class="form-select">
+                            <option value="">All Locations</option>
+                            <option value="Kathmandu">Kathmandu</option>
+                            <option value="Pokhara">Pokhara</option>
+                            <option value="Chitwan">Chitwan</option>
+                            <option value="Dharan">Dharan</option>
+                            <option value="Nayagaun Deupur">Nayagaun Deupur</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="practiceFilter" class="form-select">
+                            <option value="">All Practice Areas</option>
+                            <option value="Corporate">Corporate</option>
+                            <option value="Family">Family</option>
+                            <option value="Criminal">Criminal</option>
+                            <option value="Property">Property</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Lawyers List -->
+                <div id="lawyersList" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <!-- Lawyer cards will be populated via JavaScript -->
+                </div>
+            </section>
+
+            <!-- Connect Section -->
+            <section id="connect" class="connect-section mb-5">
+                <h2 class="text-center fw-bold mb-4">Connect with a Lawyer</h2>
+                <div class="row g-5">
+                    <!-- Contact Form -->
+                    <div class="col-md-6">
+                        <h4 class="fw-semibold mb-4">Book a Consultation</h4>
+                        <div id="contactForm">
+                            <div class="mb-4">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number">
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Preferred Consultation Method</label>
+                                <select id="consultMethod" class="form-select">
+                                    <option value="phone">Phone</option>
+                                    <option value="email">Email</option>
+                                    <option value="chat">Chat</option>
+                                    <option value="skype">Skype</option>
+                                    <option value="office">Office Visit</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Your Message</label>
+                                <textarea id="message" class="form-control" rows="5" placeholder="Describe your legal query" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Submit Consultation Request</button>
+                        </div>
+                    </div>
+                    <!-- Latest Legal News Section -->
+                    <div class="col-md-6 news-section">
+                        <h4 class="fw-semibold mb-4">Legal News You Should Know</h4>
+                        <div id="newsList">
+                            <div class="card news-card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">📌 New Taxation Policy Update (June 2025)</h5>
+                                    <p class="card-text">The Nepal government has maintained the electric vehicle tax structure for fiscal year 2082/83, with a 10% customs duty, 13% VAT, and NPR 10,000 Road Development Tax for two-wheelers. Stay informed about how these policies impact your business. <a href="#" class="text-primary">Read more</a></p>
+                                </div>
+                            </div>
+                            <div class="card news-card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">📌 Startups Can Now Register Online</h5>
+                                    <p class="card-text">Nepal’s new online company registration portal simplifies the process for startups. Learn the steps to register your business quickly and comply with legal requirements. <a href="#" class="text-primary">Read more</a></p>
+                                </div>
+                            </div>
+                            <div class="card news-card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">📌 Changes in Labor Law for 2025</h5>
+                                    <p class="card-text">Upcoming labor law amendments in 2025 may affect hiring and employee benefits. Stay ahead with our guide to compliance for businesses. <a href="#" class="text-primary">Read more</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content row g-4">
+                <div class="footer-column col-md-3">
+                    <h4>LegalEase Nepal</h4>
+                    <p>Empowering Nepali entrepreneurs with legal knowledge through AI technology.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column col-md-3">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#solution">Our Solution</a></li>
+                        <li><a href="#technology">Technology</a></li>
+                        <li><a href="#impact">Impact</a></li>
+                        <li><a href="#team">Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column col-md-3">
+                    <h4>Resources</h4>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="https://youtu.be/your-demo-video" target="_blank">Demo Video</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column col-md-3">
+                    <h4>Contact</h4>
+                    <ul class="footer-links list-unstyled">
+                        <li>Kathmandu, Nepal</li>
+                        <li>contact@legaleasenepal.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Legal Chatbot. All rights reserved.</p>
+                <p>This is a demo application and not intended for professional legal advice.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Mock lawyer data with updated images for specified lawyers
+        const lawyers = [
+            { id: 1, name: "Ashish Adhikari", location: "Kathmandu", practice: "Corporate", rating: 4.8, img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80" },
+            { id: 2, name: "Durgesh Raj Pant", location: "Pokhara", practice: "Family", rating: 4.5, img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80" },
+            { id: 3, name: "Nabin Bhandari", location: "Chitwan", practice: "Criminal", rating: 4.7, img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=200&q=80" },
+            { id: 4, name: "Daya Ram Gautam", location: "Dharan", practice: "Property", rating: 4.6, img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=200&q=80" },
+            { id: 5, name: "Sita Sharma", location: "Nayagaun Deupur", practice: "Corporate", rating: 4.9, img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" },
+            { id: 6, name: "Ramesh Thapa", location: "Kathmandu", practice: "Family", rating: 4.4, img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" }
+        ];
+
+        // Populate lawyers list
+        function renderLawyers(data) {
+            const lawyersList = $('#lawyersList');
+            lawyersList.empty();
+            data.forEach(lawyer => {
+                const stars = Math.round(lawyer.rating);
+                const starIcons = '<i class="bi bi-star-fill"></i>'.repeat(stars) + '<i class="bi bi-star"></i>'.repeat(5 - stars);
+                lawyersList.append(`
+                    <div class="col">
+                        <div class="card h-100 text-center">
+                            <div class="card-body">
+                                <img src="${lawyer.img}" class="lawyer-img mb-3" alt="${lawyer.name}">
+                                <h5 class="card-title">${lawyer.name}</h5>
+                                <p class="card-text">Location: ${lawyer.location}</p>
+                                <p class="card-text">Practice Area: ${lawyer.practice}</p>
+                                <p class="card-text star-rating">${starIcons} (${lawyer.rating}/5)</p>
+                                <a href="#connect" class="btn btn-outline-primary">Contact</a>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+        }
+
+        // Initial render
+        renderLawyers(lawyers);
+
+        // Filter lawyers
+        $('#locationFilter, #practiceFilter').change(function() {
+            const location = $('#locationFilter').val();
+            const practice = $('#practiceFilter').val();
+            const filteredLawyers = lawyers.filter(lawyer => {
+                return (!location || lawyer.location === location) &&
+                       (!practice || lawyer.practice === practice);
+            });
+            renderLawyers(filteredLawyers);
+        });
+
+        // Handle contact form submission
+        $('#contactForm').submit(function(e) {
+            e.preventDefault();
+            const formData = {
+                name: $('#name').val(),
+                email: $('#email').val(),
+                phone: $('#phone').val(),
+                consultMethod: $('#consultMethod').val(),
+                message: $('#message').val()
+            };
+            $.ajax({
+                url: '/api/contact',
+                type: 'POST',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function(response) {
+                    alert('Consultation request submitted!');
+                    $('#contactForm')[0].reset();
+                },
+                error: function() {
+                    alert('Error submitting request. Please try again.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

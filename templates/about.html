@@ -1,53 +1,1096 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - LegalEase Nepal | AI Legal Assistant</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e3a8a;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --accent-dark: #f97316;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --text: #334155;
+            --card-bg: #ffffff;
+        }
 
-{% block title %}About - LEGALEASE NEPAL{% endblock %}
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-{% block content %}
-<div class="row">
-    <div class="col-lg-8 offset-lg-2">
-        <div class="card">
-            <div class="card-body">
-                <h1 class="card-title text-center mb-4">About Our Legal Chatbot</h1>
-                
-                <h3>What We Offer</h3>
-                <p>
-                    Our Legal Chatbot is an AI-powered assistant designed to provide general information about legal topics. 
-                    It can help you understand basic legal concepts, terminology, and procedures.
-                </p>
-                
-                <h3>How It Works</h3>
-                <p>
-                    The chatbot uses advanced natural language processing to understand your questions and provide relevant information.
-                    It has been trained on a wide range of legal documents and resources to give you accurate and helpful responses.
-                </p>
-                
-                <div class="alert alert-warning">
-                    <h4 class="alert-heading"><i class="bi bi-exclamation-triangle me-2"></i>Important Disclaimer</h4>
-                    <p>
-                        The information provided by this chatbot is for general informational purposes only and is not intended to be legal advice.
-                        The chatbot cannot replace the expertise of a qualified legal professional.
-                    </p>
-                    <p class="mb-0">
-                        For specific legal issues, please consult with a licensed attorney in your jurisdiction.
-                    </p>
-                </div>
-                
-                <h3>Features</h3>
-                <ul>
-                    <li>Instant responses to legal questions</li>
-                    <li>Information on various legal topics</li>
-                    <li>Chat history saved to your account</li>
-                    <li>Source citations for further research</li>
-                    <li>User-friendly interface</li>
-                </ul>
-                
-                <h3>Contact Us</h3>
-                <p>
-                    If you have any questions, feedback, or concerns about our Legal Chatbot, please contact us at:
-                    <a href="mailto:support@legalchatbot.example.com">support@legalchatbot.example.com</a>
-                </p>
-            </div>
+        main {
+            flex: 1;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #2563eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-weight: 500;
+            color: #d1e0ff;
+            font-size: 1.2rem;
+        }
+
+        .nav-link {
+            color: #d1e0ff;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 150px 0 120px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 60px;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+            opacity: 0.4;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            width: 100%;
+        }
+        
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: perspective(1000px) rotateY(-10deg);
+            border: 4px solid rgba(255,255,255,0.1);
+        }
+        
+        .tagline {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+            padding: 8px 16px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        
+        .tagline-highlight {
+            margin-right: 10px;
+        }
+        
+        .tagline svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 0 0 25px;
+            line-height: 1.2;
+        }
+        
+        .text-gradient {
+            background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 35px;
+            max-width: 550px;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            margin-top: 35px;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--dark);
+            font-weight: 600;
+            padding: 14px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline-white {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            font-weight: 600;
+            padding: 14px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-outline-white:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Background elements */
+        .hero-bg-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(5px);
+        }
+        
+        .circle-1 {
+            width: 350px;
+            height: 350px;
+            top: -120px;
+            right: -120px;
+        }
+        
+        .circle-2 {
+            width: 180px;
+            height: 180px;
+            bottom: 120px;
+            left: -60px;
+        }
+        
+        .circle-3 {
+            width: 250px;
+            height: 250px;
+            bottom: -60px;
+            right: 15%;
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 3;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+        
+        .mouse {
+            width: 30px;
+            height: 45px;
+            border: 2px solid rgba(255,255,255,0.7);
+            border-radius: 15px;
+            position: relative;
+            margin-top: 12px;
+        }
+        
+        .wheel {
+            width: 5px;
+            height: 10px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 2px;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scroll-wheel 2s infinite;
+        }
+        
+        @keyframes scroll-wheel {
+            0% { top: 10px; opacity: 1; }
+            50% { top: 18px; opacity: 0.5; }
+            100% { top: 10px; opacity: 1; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            color: var(--text);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* Card Layout */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-primary {
+            border-top: 4px solid var(--primary);
+        }
+
+        .card-secondary {
+            border-top: 4px solid var(--secondary);
+        }
+
+        .card-accent {
+            border-top: 4px solid var(--accent);
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .card p, .card li {
+            color: var(--text);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .card ul {
+            padding-left: 20px;
+        }
+
+        .card li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .card li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        .card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .card a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        /* Feature Highlights */
+        .feature-highlight {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .feature-highlight {
+                flex-direction: column;
+            }
+        }
+
+        .feature-image {
+            flex: 1;
+            min-height: 300px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .feature-content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .feature-content h3 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+        }
+
+        .team-photo {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .team-info {
+            padding: 25px 20px;
+        }
+
+        .team-info h4 {
+            margin: 0 0 5px;
+            font-size: 1.3rem;
+            color: var(--dark);
+        }
+
+        .team-info p {
+            color: var(--text);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Video Section */
+        .video-section {
+            margin-bottom: 80px;
+            text-align: center;
+            background-color: #f1f5f9;
+            padding: 40px 20px;
+        }
+
+        .video-section h2 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .video-section h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .video-wrapper {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sustainable Goals Section */
+        .sustainability-section {
+            margin-bottom: 80px;
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #f1f5f9;
+        }
+
+        .sustainability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .sustainability-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: left;
+        }
+
+        .sustainability-card img {
+            max-width: 100px;
+            margin-bottom: 15px;
+            object-fit: contain;
+        }
+
+        .sustainability-card h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .sustainability-card p {
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        /* Footer Styles from Connect Page */
+        .footer {
+            background-color: #1a3c6c;
+            color: white;
+            padding: 3rem 0;
+        }
+        .footer h4 {
+            color: #f1c40f;
+            margin-bottom: 1.5rem;
+        }
+        .footer-links li a {
+            color: #d1e0ff;
+            text-decoration: none;
+        }
+        .footer-links li a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+        .social-links a {
+            color: #d1e0ff;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+        .social-links a:hover {
+            color: #ffffff;
+        }
+        .footer-bottom {
+            border-top: 1px solid #d1e0ff;
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .footer-bottom p {
+            margin: 0.5rem 0;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text {
+                margin-bottom: 40px;
+                max-width: 100%;
+            }
+
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 100px 0 80px;
+                min-height: 550px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .feature-content {
+                padding: 30px;
+            }
+
+            .video-wrapper iframe {
+                height: 300px;
+            }
+
+            .sustainability-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 80px 0 60px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary, .btn-outline-white {
+                width: 100%;
+                text-align: center;
+            }
+
+            .card-content {
+                padding: 20px;
+            }
+
+            .video-wrapper iframe {
+                height: 200px;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-0 { margin-top: 0; }
+        .mb-0 { margin-bottom: 0; }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="/">LEGALEASE NEPAL</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"><i class="bi bi-house"></i> Home</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/about"><i class="bi bi-info-circle"></i> About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/connect"><i class="bi bi-people"></i> Connect</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signup"><i class="bi bi-person-plus"></i> Sign Up</a>
+                </li>
+            </ul>
         </div>
     </div>
-</div>
-{% endblock %}
+</nav>
+
+<!-- Hero Section -->
+<header class="hero">
+    <div class="hero-bg-elements">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
+    </div>
+    
+    <div class="hero-content container">
+        <div class="hero-text">
+            <div class="tagline">
+                <span class="tagline-highlight">AI-Powered Legal Assistance</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </div>
+            <h1>Democratizing <span class="text-gradient">Legal Access</span> in Nepal</h1>
+            <p class="hero-subtitle">LegalEase Nepal provides affordable, AI-powered legal guidance to small businesses and freelancers, helping them navigate legal processes with confidence.</p>
+            <div class="hero-cta">
+                <a href="#solution" class="btn btn-primary">Explore Our Solution</a>
+                <a href="#video" class="btn btn-outline-white">
+                    <i class="fas fa-play-circle"></i> Watch Demo
+                </a>
+            </div>
+        </div>
+        
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Legal Document Illustration">
+        </div>
+    </div>
+    
+    <div class="scroll-indicator">
+        <span>Scroll to explore</span>
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="section-header">
+            <h2>About LegalEase Nepal</h2>
+            <p>Our mission is to bridge the justice gap in Nepal's informal sector through accessible technology</p>
+        </div>
+
+        <div class="card-grid">
+            <div class="card card-primary">
+                <img src="https://images.unsplash.com/photo-1589216532372-1c2a367900d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Legal Books" class="card-image">
+                <div class="card-content">
+                    <h3>Who We Are</h3>
+                    <p><strong>LegalEase Nepal</strong> is an innovative legal tech initiative focused on making legal knowledge accessible to everyone, regardless of income or education level.</p>
+                    <p>Our team combines legal expertise with cutting-edge AI technology to create solutions that empower Nepal's small business owners and independent workers.</p>
+                </div>
+            </div>
+
+            <div class="card card-secondary">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Justice Scale" class="card-image">
+                <div class="card-content">
+                    <h3>The Problem We Solve</h3>
+                    <p>In Nepal, over 60% of the workforce operates in the informal sector with little to no access to affordable legal services.</p>
+                    <p>This leaves small vendors, freelancers, and micro-entrepreneurs vulnerable to exploitation, contract disputes, and legal challenges they don't understand.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="section">
+        <div class="section-header">
+            <h2>Our Innovative Solution</h2>
+            <p>How LegalEase Nepal is transforming access to justice through technology</p>
+        </div>
+
+        <div class="feature-highlight">
+            <div class="feature-image" style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+            <div class="feature-content">
+                <h3>AI-Powered Legal Assistant</h3>
+                <p>Our chatbot platform provides instant, reliable legal advice in simple language, available 24/7 through multiple channels including WhatsApp and web chat.</p>
+                <p>Key features include:</p>
+                <ul>
+                    <li>Bilingual support (Nepali and English)</li>
+                    <li>Legal compliance checking</li>
+                    <li>Step-by-step guidance for common legal processes</li>
+                </ul>
+                <a href="#technology" class="btn btn-outline" style="margin-top: 20px; color: #2563eb; border: 2px solid #2563eb; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+                    See How It Works
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology" class="section">
+        <div class="section-header">
+            <h2>Technology Stack</h2>
+            <p>The powerful tools behind our legal assistance platform</p>
+        </div>
+
+        <div class="card-grid">
+            <div class="card card-accent">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="AI Technology" class="card-image">
+                <div class="card-content">
+                    <h3>AI & Machine Learning</h3>
+                    <p>Our chatbot uses advanced NLP models trained on Nepalese legal documents to provide accurate, context-aware responses.</p>
+                    <ul>
+                        <li>Custom-trained legal language models</li>
+                        <li>Continuous learning from user interactions</li>
+                        <li>Sentiment analysis for better assistance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card card-primary">
+                <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Development" class="card-image">
+                <div class="card-content">
+                    <h3>Development Stack</h3>
+                    <p>Built with modern, scalable technologies to ensure reliability and performance.</p>
+                    <ul>
+                        <li>Python FastAPI Backend</li>
+                        <li>HTML,CSS,Bootstrap,JS Frontend</li>
+                        <li>SQlite Database</li>
+                    </ul>
+                    <p><a href="https://github.com/LegalEaseNepal/legal-chatbot" target="_blank">View our GitHub repository</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="section">
+        <div class="section-header">
+            <h2>Our Impact</h2>
+            <p>Advancing the UN Sustainable Development Goals through innovation</p>
+        </div>
+
+        <div class="card-grid">
+            <div class="card card-secondary">
+                <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Decent Work and Economic Growth" class="card-image">
+                <div class="card-content">
+                    <h3>Goal 8: Decent Work & Economic Growth</h3>
+                    <p>By providing legal protection to informal workers, we enable sustainable economic opportunities and help formalize Nepal's growing gig economy.</p>
+                    <p>Our platform helps users:</p>
+                    <ul>
+                        <li>Create legally sound contracts</li>
+                        <li>Understand labor rights</li>
+                        <li>Navigate business registration</li>
+                        <li>Resolve payment disputes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card card-primary">
+                <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Peace, Justice and Strong Institutions" class="card-image">
+                <div class="card-content">
+                    <h3>Goal 16: Peace, Justice & Strong Institutions</h3>
+                    <p>We're reducing barriers to justice by making legal knowledge freely available and helping users navigate complex systems.</p>
+                    <p>Key contributions:</p>
+                    <ul>
+                        <li>Democratizing access to legal information</li>
+                        <li>Reducing case backlogs through alternative resolution</li>
+                        <li>Promoting legal literacy</li>
+                        <li>Supporting judicial system digitization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="video" class="video-section">
+        <div class="section-header">
+            <h2>Watch Story Behind How the Platform Works</h2>
+        </div>
+        <div class="video-wrapper">
+            <iframe width="100%" height="450" src="https://www.youtube.com/embed/nW5L8zdjNps" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="section">
+        <div class="section-header">
+            <h2>Our Team</h2>
+            <p>The passionate minds behind LegalEase Nepal</p>
+        </div>
+
+        <div class="team-grid">
+            <div class="team-card">
+                <img src="C:\Users\Administrator\Desktop\aarohi photo.jpg" alt="Aarohishree Subedi" class="team-photo">
+                <div class="team-info">
+                    <h4>Aarohishree Subedi</h4>
+                    <p>Frontend Developer</p>
+                    <a href="https://www.linkedin.com/in/aarohi-subedi/" target="_blank" class="btn" style="background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border: none; border-radius: 5px;">
+                        Connect
+                    </a>
+                </div>
+            </div>
+            <div class="team-card">
+                <img src="C:\Users\Administrator\Desktop\preeyanka photo.jpg" alt="Priyanka Khatri" class="team-photo">
+                <div class="team-info">
+                    <h4>Priyanka Khatri</h4>
+                    <p>Backend Developer</p>
+                    <a href="https://www.linkedin.com/in/priyanka-khatri07/" target="_blank" class="btn" style="background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border: none; border-radius: 5px;">
+                        Connect
+                    </a>
+                </div>
+            </div>
+            <div class="team-card">
+                <img src="C:\Users\Administrator\Desktop\shreya photo.jpg" alt="Shreya Bhatta" class="team-photo">
+                <div class="team-info">
+                    <h4>Shreya Bhatta</h4>
+                    <p>AI Specialist</p>
+                    <a href="https://www.linkedin.com/in/shreya-bhatta/" target="_blank" class="btn" style="background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border: none; border-radius: 5px;">
+                        Connect
+                    </a>
+                </div>
+            </div>
+            <div class="team-card">
+                <img src="C:\Users\Administrator\Desktop\shubha photo.jpg" alt="Shubha Laxmi Ghimire" class="team-photo">
+                <div class="team-info">
+                    <h4>Shubha Laxmi Ghimire</h4>
+                    <p>AI Specialist</p>
+                    <a href="https://www.linkedin.com/in/shubha-laxmi-ghimire/" target="_blank" class="btn" style="background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border: none; border-radius: 5px;">
+                        Connect
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sustainable Goals Section -->
+    <section id="sustainability" class="sustainability-section">
+        <div class="section-header">
+            <h2>Adherence with Sustainability</h2>
+            <p>Aligning with the UN Sustainable Development Goals</p>
+        </div>
+        <div class="sustainability-grid">
+            <div class="sustainability-card">
+                <img src="https://images.unsplash.com/photo-1505455184862-554165e5f6ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Industry, Innovation and Infrastructure">
+                <h3>Goal 9: Industry, Innovation and Infrastructure</h3>
+                <p>Promotes accessible legal information, reduces misinformation, and strengthens civic trust.</p>
+            </div>
+            <div class="sustainability-card">
+                <img src="https://images.unsplash.com/photo-1593113598332-cd288f6499c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Reduced Inequalities">
+                <h3>Goal 10: Reduced Inequalities</h3>
+                <p>Uses AI and local storage to build an affordable, scalable legal tech solution.</p>
+            </div>
+            <div class="sustainability-card">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Peace, Justice and Strong Institutions">
+                <h3>Goal 16: Peace, Justice and Strong Institutions</h3>
+                <p>Aims to collaborate with legal experts, civic orgs, and open-source communities.</p>
+            </div>
+            <div class="sustainability-card">
+                <img src="https://images.unsplash.com/photo-1521737711867-e6b258f33a79?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Partnerships for the Goals">
+                <h3>Goal 17: Partnerships for the Goals</h3>
+                <p>Bridges legal literacy gaps, with plans for multilingual and inclusive access.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content row g-4">
+            <div class="footer-column col-md-3">
+                <h4>LegalEase Nepal</h4>
+                <p>Empowering Nepali entrepreneurs with legal knowledge through AI technology.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-column col-md-3">
+                <h4>Quick Links</h4>
+                <ul class="footer-links list-unstyled">
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#solution">Our Solution</a></li>
+                    <li><a href="#technology">Technology</a></li>
+                    <li><a href="#impact">Impact</a></li>
+                    <li><a href="#team">Team</a></li>
+                </ul>
+            </div>
+            <div class="footer-column col-md-3">
+                <h4>Resources</h4>
+                <ul class="footer-links list-unstyled">
+                    <li><a href="https://youtu.be/nW5L8zdjNps" target="_blank">Demo Video</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column col-md-3">
+                <h4>Contact</h4>
+                <ul class="footer-links list-unstyled">
+                    <li>Kathmandu, Nepal</li>
+                    <li>contact@legaleasenepal.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Legal Chatbot. All rights reserved.</p>
+            <p>This is a demo application and not intended for professional legal advice.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+{% extends "base.html" %}
+
+{% block title %}Document Upload - LEGALEASE NEPAL{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/style.css">
+<style>
+    .upload-container {
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    .upload-area {
+        flex: 0 0 20%;
+        overflow-y: auto;
+        padding: 1.5rem;
+        background-color: #ffffff;
+        border: 2px dashed #007bff;
+        border-radius: 0.5rem;
+        text-align: center;
+        position: relative;
+        transition: all 0.3s ease;
+        margin-bottom: 1rem;
+    }
+
+    .upload-area.dragover {
+        background-color: #e9ecef;
+        border-color: #0056b3;
+    }
+
+    .upload-area p {
+        color: #6c757d;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+
+    .upload-input {
+        display: none;
+    }
+
+    .upload-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+    }
+
+    .upload-button:hover {
+        background-color: #0056b3;
+    }
+
+    .uploaded-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1rem;
+        background-color: #ffffff;
+        border-radius: 0.5rem;
+        border: 1px solid #dee2e6;
+    }
+
+    .file-item {
+        background-color: #e9ecef;
+        color: #212529;
+        padding: 0.75rem 1rem;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        word-wrap: break-word;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .file-item a {
+        color: #007bff;
+        text-decoration: none;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .file-item a:hover {
+        text-decoration: underline;
+        color: #0056b3;
+    }
+
+    .file-time {
+        font-size: 0.7rem;
+        opacity: 0.7;
+        margin-left: 1rem;
+        color: #6c757d;
+    }
+
+    .answer-container {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        margin-top: 1rem;
+    }
+
+    .legal-content {
+        margin-top: 0.5rem;
+    }
+
+    .legal-content h1, .legal-content h2, .legal-content h3 {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .legal-content p {
+        margin: 0.5rem 0;
+    }
+
+    .legal-content ul, .legal-content ol {
+        margin: 0.5rem 0;
+        padding-left: 1.5rem;
+    }
+
+    .sources {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: white;
+        border-radius: 0.5rem 0.5rem 0 0;
+        padding: 1rem;
+    }
+
+    .card-header h3 {
+        font-weight: 500;
+        font-size: 1.25rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .card-header button {
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+    }
+
+    .card-header button:hover {
+        background-color: #0056b3;
+    }
+
+    .uploaded-content::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .uploaded-content::-webkit-scrollbar-track {
+        background: #f8f9fa;
+        border-radius: 4px;
+    }
+
+    .uploaded-content::-webkit-scrollbar-thumb {
+        background: #007bff;
+        border-radius: 4px;
+    }
+
+    .uploaded-content::-webkit-scrollbar-thumb:hover {
+        background: #0056b3;
+    }
+
+    .error-message, .success-message {
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        margin-top: 1rem;
+        text-align: center;
+    }
+
+    .error-message {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .success-message {
+        background-color: #d4edda;
+        color: #155724;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 offset-lg-2">
+        <div class="card">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">
+                    <i class="bi bi-cloud-upload me-2"></i>Document Upload
+                </h3>
+                <button id="clearUploads" class="btn btn-sm btn-outline-light">
+                    <i class="bi bi-trash me-1"></i>Clear Uploads
+                </button>
+            </div>
+            <div class="card-body upload-container">
+                <div class="upload-area" id="uploadArea">
+                    <p>Upload your legal documents securely (PDF, DOC, DOCX, TXT)</p>
+                    <input type="file" id="fileInput" class="upload-input" multiple accept=".pdf,.doc,.docx,.txt">
+                    <button class="upload-button" id="uploadButton">Select Files</button>
+                </div>
+                <div class="uploaded-content" id="uploadedContent">
+                    {% for file in user.uploaded_files|default([]) %}
+                    <div class="file-item">
+                        <a href="{{ file.url|default('#') }}">{{ file.name|default('Untitled File') }}</a>
+                        <div class="file-time">{{ file.uploaded_at|default('Unknown') }}</div>
+                    </div>
+                    {% if file.analysis %}
+                    <div class="answer-container">
+                        <strong>Analysis for {{ file.name|default('Untitled File') }}:</strong>
+                        <div class="legal-content">{{ file.analysis|safe }}</div>
+                        {% if file.sources %}
+                        <div class="sources">
+                            <strong>Sources:</strong>
+                            <ul>
+                                {% for source in file.sources %}
+                                <li>{{ source.source }}: {{ source.content }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+                <div id="successMessage" class="success-message" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const uploadButton = document.getElementById('uploadButton');
+    const uploadedContent = document.getElementById('uploadedContent');
+    const clearUploadsBtn = document.getElementById('clearUploads');
+    const errorMessage = document.getElementById('errorMessage');
+    const successMessage = document.getElementById('successMessage');
+
+    function getCurrentTime() {
+        const now = new Date();
+        return now.toLocaleString('en-US', { timeZone: 'Asia/Kathmandu', hour12: true });
+    }
+
+    function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+            errorMessage.style.opacity = '0';
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+                errorMessage.style.opacity = '1';
+            }, 300);
+        }, 3000);
+    }
+
+    function showSuccess(message) {
+        successMessage.textContent = message;
+        successMessage.style.display = 'block';
+        setTimeout(() => {
+            successMessage.style.opacity = '0';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+                successMessage.style.opacity = '1';
+            }, 300);
+        }, 3000);
+    }
+
+    function displayContent(file, fileUrl, answer, filename, sources) {
+        const fileItem = document.createElement('div');
+        fileItem.classList.add('file-item');
+        fileItem.style.opacity = '0';
+        fileItem.style.transform = 'translateY(20px)';
+
+        const fileLink = document.createElement('a');
+        fileLink.href = fileUrl || '#';
+        fileLink.textContent = file.name;
+        fileItem.appendChild(fileLink);
+
+        const fileTime = document.createElement('div');
+        fileTime.classList.add('file-time');
+        fileTime.textContent = getCurrentTime();
+        fileItem.appendChild(fileTime);
+
+        uploadedContent.appendChild(fileItem);
+
+        setTimeout(() => {
+            fileItem.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            fileItem.style.opacity = '1';
+            fileItem.style.transform = 'translateY(0)';
+        }, 10);
+
+        if (answer) {
+            const answerDiv = document.createElement('div');
+            answerDiv.classList.add('answer-container');
+            answerDiv.innerHTML = `
+                <strong>Analysis for ${filename}:</strong>
+                <div class="legal-content">${answer}</div>
+                ${sources.length > 0 ? `
+                    <div class="sources">
+                        <strong>Sources:</strong>
+                        <ul>
+                            ${sources.map(source => `<li>${source.source}: ${source.content}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+            `;
+            uploadedContent.appendChild(answerDiv);
+
+            answerDiv.style.opacity = '0';
+            answerDiv.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                answerDiv.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                answerDiv.style.opacity = '1';
+                answerDiv.style.transform = 'translateY(0)';
+            }, 10);
+        }
+    }
+
+    function handleFiles(files) {
+        const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'];
+        Array.from(files).forEach(file => {
+            if (allowedTypes.includes(file.type)) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayContent(file, data.fileUrl, data.answer, data.filename, data.sources || []);
+                        showSuccess(`File ${file.name} uploaded and analyzed successfully!`);
+                    } else {
+                        showError(data.error || 'Failed to upload file.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error uploading file:', error);
+                    showError('Error uploading file. Please try again.');
+                });
+            } else {
+                showError('Only PDF, DOC, DOCX, and TXT files are allowed.');
+            }
+        });
+    }
+
+    uploadButton.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            handleFiles(fileInput.files);
+            fileInput.value = '';
+        }
+    });
+
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        if (e.dataTransfer.files.length > 0) {
+            handleFiles(e.dataTransfer.files);
+        }
+    });
+
+    clearUploadsBtn.addEventListener('click', async () => {
+        if (confirm('Are you sure you want to clear all uploaded files?')) {
+            try {
+                const response = await fetch('/clear-uploads', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({})
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to clear uploads');
+                }
+
+                uploadedContent.innerHTML = '';
+                showSuccess('All uploaded files cleared successfully.');
+            } catch (error) {
+                console.error('Error clearing uploads:', error);
+                showError('Failed to clear uploaded files. Please try again.');
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
+{% endblock %}
