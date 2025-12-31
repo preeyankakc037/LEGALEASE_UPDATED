@@ -67,7 +67,7 @@ retriever = None
 
 # Initialize embeddings with a reliable local model
 def get_embeddings():
-    return HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    return HuggingFaceEmbeddings(model_name="all-mpnet-base-v2")
 
 # Load or create embeddings and vector store
 try:
