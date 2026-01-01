@@ -6,7 +6,7 @@ A RAG-powered legal assistant chatbot specialized in Nepalese business law, with
 - Authentication (signup/login/profile)
 - Chat with Gemini 2.5 Flash
 - Retrieval-Augmented Generation (RAG) from uploaded legal documents (PDF, DOCX, TXT)
-- Local embeddings with `all-MiniLM-L6-v2` (no API key needed)
+- Local embeddings with `all-mpnet-base-v2` (no API key needed)
 - Clean modular FastAPI structure
 
 ### Quick Start
