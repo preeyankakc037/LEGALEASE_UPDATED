@@ -77,7 +77,10 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 ''' Setting Up Gemini AI Client for Generative Model Integration '''
+
 GEMINI_API_KEY = "your_api_key"
+
+GEMINI_API_KEY = "yourapikey"
 os.environ["GOOGLE_API_KEY"] = GEMINI_API_KEY
 MODEL_NAME = "gemini-2.5-flash"
 

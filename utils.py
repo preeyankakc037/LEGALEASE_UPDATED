@@ -2,7 +2,7 @@
 import google.generativeai as genai
 from google.generativeai.types import GenerationConfig
 from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings  # Correct modern import
+from langchain_huggingface import HuggingFaceEmbeddings
 import pickle
 from pypdf import PdfReader
 from docx import Document
@@ -12,86 +12,95 @@ from bs4 import BeautifulSoup
 import markdown
 from models import ChatMessage
 
-# Gemini setup
-GEMINI_API_KEY = "your api key "
+# --- Gemini 2.5 Flash Setup ---
+GEMINI_API_KEY = "AIzaSyAkB0ef-0Zs23Pa-N0ceZ3R2NBSFZHzDZI"
 genai.configure(api_key=GEMINI_API_KEY)
-MODEL_NAME = "gemini-2.5-flash"  
+MODEL_NAME = "gemini-2.5-flash"
 
-# Full SYSTEM_PROMPT
+# --- SYSTEM PROMPT ---
 SYSTEM_PROMPT = """
-You are a highly knowledgeable and reliable Legal Assistant specialized in Nepalese Business Law, with particular expertise in the Hospitality and Tourism sectors. Your core responsibility is to deliver clear, verified, and step-by-step legal guidance on starting and operating a business in Nepal. Your assistance must cover, but is not limited to:
+You are a highly knowledgeable, reliable, and professional Legal Assistant specialized in **Nepalese Business Law**, especially for sectors like **Hospitality, Tourism, and SMEs**. Your task is to provide **clear, step-by-step, legally grounded guidance** to founders, entrepreneurs, and business professionals in Nepal. 
 
-Company registration and sector-specific licenses
-Tax registration, PAN/VAT compliance, and filing
-Labor laws, employee contracts, benefits, and workplace compliance
-Intellectual Property (IP) protection, including trademarks and copyrights
-Tourism and hospitality-specific legal obligations, such as hotel/restaurant licensing, food safety regulations, and tourist activity compliance
-Other regulatory acts, such as the Food Act, Tourism Act, Hotel Management Guidelines, and any relevant provincial rules.
+**Rules for answering:**
+1. **Grounded in law only**
+   - Use only verified Nepali laws and official sources (Acts, Regulations, Notifications).
+   - Do not speculate or provide opinions.
+   - Trusted sources: OCR, IRD, DoI, Department of Tourism.
 
-Operational Guidelines:
-Language Policy:
-- If the user writes in Nepali or mixes Nepali and English, respond in formal, professional Nepali.
-- If the user writes in English, respond in English.
+2. **Structured responses**
+   - Include sections: Direct Answer, Legal Basis, Practical Implication, Disclaimer.
+   - Use bullet points, numbers, or step-by-step explanations.
+   - Explain legal jargon where necessary.
 
-Accuracy & Sources:
-- Rely strictly on verified Nepali laws and procedures.
-- Reference official sites like:
-  - Office of the Company Registrar – OCR
-  - Inland Revenue Department – IRD
-  - Department of Industry
-  - Department of Tourism
-- If any regulation is ambiguous or likely to change, clearly state so and advise consultation with the relevant authority.
+3. **Context-sensitive**
+   - Tailor answers based on business type (hotel, restaurant, trekking company, etc.).
+   - Include procedural guidance where relevant.
 
-Communication Style:
-- Use structured, markdown-formatted responses for clarity.
-- Never speculate. Never provide outdated or unofficial advice.
-- Provide customized responses depending on the business type if specified by the user (e.g., hotel, restaurant, travel agency, trekking company, etc.).
-- Add one subtle emoji 🙂 only if the context requires warmth; otherwise maintain a formal tone.
+4. **Language**
+   - Respond in formal Nepali if the query is in Nepali.
+   - Respond in English if the query is in English.
 
-Introduction Rules:
-- If asked “Who are you?” or “Tell me about yourself,” give a brief, professional introduction.
-- Do not answer the user's main legal query in your introduction.
+5. **Safety & Risk**
+   - Highlight ambiguity or uncertainty.
+   - Advise consulting a licensed lawyer if required.
+   - Prefer silence over confident wrong answers.
 
-Scope Clarification:
-- You must answer questions related to any Nepalese business law, including laws such as the Food Act, Consumer Protection Act, Tourism Regulations, etc.—even if they are not directly about business setup.
+6. **RAG integration**
+   - Use retrieved document excerpts to construct responses.
+   - Indicate sources where relevant.
 
-If the user asks a question in Nepali, reply in Nepali. If the user asks in English, reply in English
-in questions like tell me about yourself don't give sources 
+7. **Tone**
+   - Professional, concise, precise.
+   - Use **one subtle emoji 🙂** only if it adds clarity or warmth.
+
+8. **Introduction**
+   - Respond briefly if asked "Who are you?".
+   - Do not answer legal queries in introductions.
+
+**Scope**
+- Company registration & sector-specific licenses
+- Tax compliance (PAN/VAT) & filing
+- Labor law, contracts, benefits
+- Intellectual Property (trademarks, patents, copyrights)
+- Tourism & hospitality regulations
+- Other Nepali business laws (Food Act, Consumer Protection Act, Tourism Act, etc.)
+
+**Disclaimer**
+*This response is generated by LegalEase Nepal, a domain-specific AI assistant. The information is extracted from verified Nepali legal documents and official sources. While every effort is made to ensure accuracy, the system is under active development and may not capture all nuances of the law. The response is for informational purposes only and does not replace professional legal advice.*
 """
 
+
+# --- Paths ---
 INDEX_PATH = "faiss_index"
 EMBEDDINGS_PATH = "embeddings.pkl"
 
 vectorstore = None
 retriever = None
 
-# Initialize embeddings with a reliable local model
+# --- Embeddings ---
 def get_embeddings():
-    return HuggingFaceEmbeddings(model_name="all-mpnet-base-v2")
+    return HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
-# Load or create embeddings and vector store
+# --- Load or create vector store ---
 try:
     print("Loading embeddings...")
     with open(EMBEDDINGS_PATH, "rb") as f:
         embeddings = pickle.load(f)
-    
-    # Safety check - recreate if wrong type
     if not isinstance(embeddings, HuggingFaceEmbeddings):
         raise ValueError("Incompatible embeddings type")
-        
     print("Loading FAISS index...")
     vectorstore = FAISS.load_local(INDEX_PATH, embeddings, allow_dangerous_deserialization=True)
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 5})  # Increased k for full answers
     print("Vector store loaded successfully")
 except Exception as e:
-    print(f"Error loading vector store: {e}")
-    print("Will create fresh embeddings on first upload")
+    print(f"Error loading vector store: {e}. Will create fresh embeddings on first upload.")
     embeddings = get_embeddings()
     with open(EMBEDDINGS_PATH, "wb") as f:
         pickle.dump(embeddings, f)
     vectorstore = None
     retriever = None
 
+# --- Extract text from files ---
 def extract_text(file, file_path: str) -> str:
     ext = Path(file.filename).suffix.lower()
     text = ""
@@ -108,17 +117,15 @@ def extract_text(file, file_path: str) -> str:
     elif ext == ".txt":
         with open(file_path, "r", encoding="utf-8") as f:
             text = f.read()
-    
     print(f"Extracted text length from {file.filename}: {len(text)}")
     return text.strip()
 
+# --- Update vector store with new docs ---
 def update_vector_store(file_id: str, text: str, filename: str):
     global vectorstore, retriever
     if not text.strip():
         return
-    
     embeddings = get_embeddings()
-    
     if vectorstore is None:
         vectorstore = FAISS.from_texts(
             [text],
@@ -132,11 +139,11 @@ def update_vector_store(file_id: str, text: str, filename: str):
             metadatas=[{"source": filename, "file_id": file_id}],
             ids=[file_id]
         )
-    
     vectorstore.save_local(INDEX_PATH)
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 5})  # Ensure multiple chunks retrieved
     print("Vector store updated successfully")
 
+# --- Get legal response ---
 def get_legal_response(query: str, chat_history=None) -> dict:
     sources = []
     context = ""
@@ -146,7 +153,7 @@ def get_legal_response(query: str, chat_history=None) -> dict:
         try:
             docs = retriever.get_relevant_documents(query)
             for doc in docs:
-                source = doc.metadata.get('source', 'Unknown')
+                source = doc.metadata.get("source", "Unknown")
                 context += f"\n\nDocument: {source}\n{doc.page_content}"
                 if source.lower().endswith('.pdf'):
                     found_in_pdf = True
@@ -166,7 +173,7 @@ RELEVANT DOCUMENT EXCERPTS:
 
 USER QUERY: {query}
 
-Provide a clear, accurate, and professional response in markdown format. Use the document excerpts when relevant.
+Provide a clear, complete, and professional response in markdown format using the document excerpts.
 """
 
     try:
@@ -176,7 +183,7 @@ Provide a clear, accurate, and professional response in markdown format. Use the
                 temperature=0.2,
                 top_p=0.8,
                 top_k=40,
-                max_output_tokens=1024,
+                max_output_tokens=4096,  # Increased for long legal answers
             )
         )
         response = model.generate_content(prompt_text)
@@ -185,10 +192,12 @@ Provide a clear, accurate, and professional response in markdown format. Use the
         print(f"Gemini Error: {str(e)}")
         raw_answer = "Sorry, the AI service is temporarily unavailable."
 
+    # Convert to HTML for frontend
     raw_answer = raw_answer.replace("```html", "").replace("```", "")
     html_answer = markdown.markdown(raw_answer)
     soup = BeautifulSoup(html_answer, 'html.parser')
-    
+
+    # Add CSS classes
     for tag in soup.find_all(['h1','h2','h3','h4','h5','h6']):
         tag['class'] = tag.get('class', []) + ['legal-heading']
     for tag in soup.find_all('p'):

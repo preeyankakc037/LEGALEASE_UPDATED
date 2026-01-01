@@ -59,6 +59,24 @@
     .chat-input {
         margin-top: 1rem;
     }
+
+    .chat-input textarea {
+        resize: none;
+        overflow-y: auto;
+        min-height: 45px;
+        max-height: 250px;
+        line-height: 1.5;
+        padding: 0.75rem;
+        border-radius: 0.375rem;
+        border: 1px solid #ced4da;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .chat-input textarea:focus {
+        border-color: #007bff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
     
     .typing-indicator {
         display: none;
@@ -179,8 +197,8 @@
                     <span></span>
                 </div>
                 <div class="chat-input">
-                    <form id="chatForm" class="d-flex">
-                        <input type="text" id="userInput" class="form-control me-2" placeholder="Type your legal question here..." required>
+                    <form id="chatForm" class="d-flex align-items-end">
+                        <textarea id="userInput" class="form-control me-2" placeholder="Type your legal question here..." required rows="1"></textarea>
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-send"></i>
                         </button>
@@ -200,6 +218,34 @@
         const chatMessages = document.getElementById('chatMessages');
         const typingIndicator = document.getElementById('typingIndicator');
         const clearHistoryBtn = document.getElementById('clearHistory');
+        
+        // Auto-resize textarea as user types
+        function autoResizeTextarea() {
+            // Reset height to auto to get the correct scrollHeight
+            userInput.style.height = 'auto';
+            
+            // Calculate new height based on content
+            const newHeight = userInput.scrollHeight;
+            
+            // Apply new height (respecting min and max from CSS)
+            userInput.style.height = newHeight + 'px';
+        }
+        
+        // Add input event listener for auto-resize
+        userInput.addEventListener('input', autoResizeTextarea);
+        
+        // Also resize on paste
+        userInput.addEventListener('paste', function() {
+            setTimeout(autoResizeTextarea, 0);
+        });
+        
+        // Handle Enter key (submit on Enter, new line on Shift+Enter)
+        userInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                chatForm.dispatchEvent(new Event('submit'));
+            }
+        });
         
         // Scroll to bottom of chat
         function scrollToBottom() {
@@ -291,6 +337,9 @@
             addMessage(query, true);
             userInput.value = '';
             
+            // Reset textarea height
+            userInput.style.height = 'auto';
+            
             // Show typing indicator
             showTypingIndicator();
             
@@ -321,9 +370,15 @@
                     
                     // Hide sources container if no sources or in conversation mode
                     if (data.is_conversation || data.sources.length === 0) {
-                        document.getElementById('sources-container').style.display = 'none';
+                        const sourcesContainer = document.getElementById('sources-container');
+                        if (sourcesContainer) {
+                            sourcesContainer.style.display = 'none';
+                        }
                     } else {
-                        document.getElementById('sources-container').style.display = 'block';
+                        const sourcesContainer = document.getElementById('sources-container');
+                        if (sourcesContainer) {
+                            sourcesContainer.style.display = 'block';
+                        }
                     }
                 }, 500);
             } catch (error) {
