@@ -13,7 +13,7 @@ import markdown
 from models import ChatMessage
 
 # --- Gemini 2.5 Flash Setup ---
-GEMINI_API_KEY = "AIzaSyAkB0ef-0Zs23Pa-N0ceZ3R2NBSFZHzDZI"
+GEMINI_API_KEY = "yourapikey"
 genai.configure(api_key=GEMINI_API_KEY)
 MODEL_NAME = "gemini-2.5-flash"
 
